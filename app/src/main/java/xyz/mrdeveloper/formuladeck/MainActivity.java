@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 totalEditTexts++;
             }
         }
-        SetQuestionTextView(question.substring(endIndex + 1, i));
+        SetQuestionTextView(question.substring(endIndex + 1, i)); //It will show question.
     }
 
     public void SetQuestionTextView(String toSet) {
