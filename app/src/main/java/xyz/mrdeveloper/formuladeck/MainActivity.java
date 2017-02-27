@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         textViewAnswer = new TextView(this);
         textViewAnswer.setTextColor(Color.BLACK);
         textViewAnswer.setTextSize(20);
-        textViewAnswer.setText("Fill values you Dumb Ass!"); //Define this in strings.xml
+        textViewAnswer.setText("Fill values you Dumb Ass!");// Define it in string.xml
         layoutParams.setMargins(10, 200, 0, 0);
 
         textViewAnswer.setLayoutParams(layoutParams);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 totalEditTexts++;
             }
         }
-        SetQuestionTextView(question.substring(endIndex + 1, i));
+        SetQuestionTextView(question.substring(endIndex + 1, i)); //It will show question.
     }
 
     public void SetQuestionTextView(String toSet) {
