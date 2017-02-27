@@ -166,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Here I will add Firebase Functionality
+
     public String CalculateAnswer() {
         Expression e = new ExpressionBuilder(questionForParser.toString())
                 .variables(variables.toArray(new String[0]))
