@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "281770299554",
+    "firebase_url": "https://formuladeck-30d25.firebaseio.com",
+    "project_id": "formuladeck-30d25",
+    "storage_bucket": "formuladeck-30d25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281770299554:android:333692525860a458",
+        "android_client_info": {
+          "package_name": "xyz.mrdeveloper.formuladeck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281770299554-velasjakvsdd4mc5hq01r9ticn2qbfvs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ87_PguVtodkWXQusfin85IdhivY7Gg8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
