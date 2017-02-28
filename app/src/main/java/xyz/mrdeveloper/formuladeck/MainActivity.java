@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         textViewAnswer = new TextView(this);
         textViewAnswer.setTextColor(Color.BLACK);
         textViewAnswer.setTextSize(20);
-        textViewAnswer.setText("Fill values you Dumb Ass!");// Define it in string.xml
+        textViewAnswer.setText(R.string.no_value_given);
         layoutParams.setMargins(10, 200, 0, 0);
 
         textViewAnswer.setLayoutParams(layoutParams);
