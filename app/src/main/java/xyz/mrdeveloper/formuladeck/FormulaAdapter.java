@@ -1,20 +1,21 @@
 package xyz.mrdeveloper.formuladeck;
 
+import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
-import net.objecthunter.exp4j.function.Function;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,66 +24,109 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by Vaibhav on 02-03-2017.
+ */
+
+public class FormulaAdapter extends BaseAdapter{
+
+    ArrayList<FormulaData> formulaDataList;
+
+    ViewHolderForFormula holder;
+
     String question = "(2 * log10[x]) / ( cos[y])";
     StringBuilder questionForParser;
-    LinearLayout mLinearLayout;
     Integer totalEditTexts = 0;
-    TextView textViewAnswer;
     Map<String, Double> variablesValue;
     List<String> variables, mathematicalEntities;
     List<EditText> editTextVariableValues;
 
-    ArrayList<FormulaData> formulaDataList;
+    Context mContext;
+
+    public FormulaAdapter(Context context, ArrayList<FormulaData> formulas) {
+        mContext = context;
+        formulaDataList = formulas;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mLinearLayout = (LinearLayout) findViewById(R.id.activity_main);
+    public int getCount() {
+        return formulaDataList.size();
+    }
 
-        formulaDataList = new ArrayList<>();
+    @Override
+    public Object getItem(int position) {
+        return formulaDataList.get(position);
+    }
 
-        FormulaData formulaData = new FormulaData("FORMULA !", "(2 * log10[x]) / ( cos[y])");
-        formulaDataList.add(formulaData);
-        formulaData = new FormulaData("FORMULA @", "(2 * log10[x]) / ( cos[y])");
-        formulaDataList.add(formulaData);
-        formulaData = new FormulaData("FORMULA #", "(2 * log10[x]) / ( cos[y])");
-        formulaDataList.add(formulaData);
-        formulaData = new FormulaData("FORMULA $", "(2 * log10[x]) / ( cos[y])");
-        formulaDataList.add(formulaData);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, FormulaList.newInstance(formulaDataList), "FormulaList")
-                .addToBackStack("FormulaList")
-                .commitAllowingStateLoss();
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
 
+        // check if the view already exists if so, no need to inflate and findViewById again!
+        if (convertView == null) {
 
-//        variables = new ArrayList<>();
-//        mathematicalEntities = new ArrayList<>();
-//        editTextVariableValues = new ArrayList<>();
-//        variablesValue = new HashMap<>();
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom row layout from your XML.
+            convertView = inflater.inflate(R.layout.formula_list_item, parent, false);
+
+            // create a new "Holder" with subviews
+            holder = new ViewHolderForFormula();
+            holder.textFormulaName = (TextView) convertView.findViewById(R.id.text_formula_name);
+            holder.textFormulaAnswer = (TextView) convertView.findViewById(R.id.text_formula_answer);
+            holder.layoutFormulaEquation = (LinearLayout) convertView.findViewById(R.id.layout_formula_equation);
+
+            FormulaData formulaData = (FormulaData) getItem(position);
+
+            question = formulaData.FormulaEquation;
+
+            // Update row view's textviews to display recipe information
+            holder.textFormulaName.setText(formulaData.FormulaName);
+
+            totalEditTexts = 0;
+            variables = new ArrayList<>();
+            mathematicalEntities = new ArrayList<>();
+            editTextVariableValues = new ArrayList<>();
+            variablesValue = new HashMap<>();
+
+            questionForParser = new StringBuilder(question);
+            SplitAndShowFormula();
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+//            holder.textFormulaAnswer = new TextView(mContext);
+//            holder.textFormulaAnswer.setTextColor(Color.BLACK);
+//            holder.textFormulaAnswer.setTextSize(20);
+//            holder.textFormulaAnswer.setText(R.string.no_value_given);
+//            layoutParams.setMargins(10, 200, 0, 0);
 //
-//        questionForParser = new StringBuilder(question);
-//        SplitAndShowFormula();
-//
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//
-//        textViewAnswer = new TextView(this);
-//        textViewAnswer.setTextColor(Color.BLACK);
-//        textViewAnswer.setTextSize(20);
-//        textViewAnswer.setText(R.string.no_value_given);
-//        layoutParams.setMargins(10, 200, 0, 0);
-//
-//        textViewAnswer.setLayoutParams(layoutParams);
-//        mLinearLayout.addView(textViewAnswer);
+//            holder.textFormulaAnswer.setLayoutParams(layoutParams);
+//            holder.layoutFormulaEquation.addView(holder.textFormulaAnswer);
 
 
+            //SetAnswerTextView("Fill values you Dumb Ass!");
+            //CalculateAnswer();
 
-        //SetAnswerTextView("Fill values you Dumb Ass!");
-        //CalculateAnswer();
+            // hang onto this eventDetailsHolder for future recycle
+            convertView.setTag(holder);
+        } else {
+            // skip all the expensive inflation/findViewById and just get the eventDetailsHolder you already made
+            holder = (ViewHolderForFormula) convertView.getTag();
+        }
+
+        return convertView;
+    }
+
+    private class ViewHolderForFormula {
+        TextView textFormulaName;
+        TextView textFormulaAnswer;
+        LinearLayout layoutFormulaEquation;
     }
 
     public void SplitAndShowFormula() {
@@ -115,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        TextView mathematicalEntity = new TextView(this);
+        TextView mathematicalEntity = new TextView(mContext);
         mathematicalEntity.setTextColor(Color.BLACK);
         mathematicalEntity.setTextSize(18);
         mathematicalEntity.setText(toSet);
@@ -123,11 +167,11 @@ public class MainActivity extends AppCompatActivity {
         layoutParams.setMargins(0, 0, 0, 0);
         mathematicalEntity.setLayoutParams(layoutParams);
 
-        mLinearLayout.addView(mathematicalEntity);
+        holder.layoutFormulaEquation.addView(mathematicalEntity);
     }
 
     public void SetEditText(String hint) {
-        EditText variable = new EditText(this);
+        EditText variable = new EditText(mContext);
 
         editTextVariableValues.add(variable);
         editTextVariableValues.get(totalEditTexts).setLayoutParams(
@@ -137,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         editTextVariableValues.get(totalEditTexts).setHintTextColor(Color.GRAY);
         editTextVariableValues.get(totalEditTexts).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-        mLinearLayout.addView(variable);
+        holder.layoutFormulaEquation.addView(variable);
 
         editTextVariableValues.get(totalEditTexts).addTextChangedListener(new CustomTextWatcher(editTextVariableValues.get(totalEditTexts)));
     }
@@ -183,9 +227,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    //Here I will add Firebase Functionality
-
+    
     public String CalculateAnswer() {
         Expression e = new ExpressionBuilder(questionForParser.toString())
                 .variables(variables.toArray(new String[0]))
@@ -202,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void SetAnswerTextView(String answer) {
         Log.d("Check", "Here I am, this is me!");
-        textViewAnswer.setText(answer);
+        holder.textFormulaAnswer.setText(answer);
 
     }
 }
