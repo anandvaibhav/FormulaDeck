@@ -1,19 +1,50 @@
 package xyz.mrdeveloper.formuladeck;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
-import android.widget.EditText;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Vaibhav on 22-02-2017.
  */
 
 public class FormulaList extends Fragment {
-    public String question = "x,+,y,*,log,z";
 
-    public FormulaList() {
-        Calculate();
+    View view;
+    ListView flyingSpaghettiMonster;
+    ArrayList<FormulaData> formulaDataList;
+
+    public static FormulaList newInstance(ArrayList<FormulaData> formulas) {
+        FormulaList formulaList = new FormulaList();
+        formulaList.formulaDataList = formulas;
+        return formulaList;
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.formula_list, container, false);
+
+        flyingSpaghettiMonster = (ListView) view.findViewById(R.id.list_formula);
+
+        final FormulaAdapter adapter = new FormulaAdapter(getContext(), formulaDataList);
+
+        flyingSpaghettiMonster.setAdapter(new SlideExpandableListAdapter(
+                adapter,
+                R.id.button_expand_toggle,
+                R.id.layout_expand
+        ));
+
+        return view;
     }
 
 //    public void setFormulaList(String decidingFactor, int decidingValue) {
@@ -21,48 +52,4 @@ public class FormulaList extends Fragment {
 //        mDecidingFactor = decidingFactor;
 //        mDecidingValue = decidingValue;
 //    }
-
-    public static FormulaList newInstance() {
-        return new FormulaList();
-    }
-
-    public void Calculate() {
-
-        EditText et = new EditText(getActivity());
-// setting input type filter
-        et.setInputType(InputType.TYPE_CLASS_NUMBER);
-// setting input max length
-   /*     InputFilter maxLengthFilter = new InputFilter.LengthFilter(inp.getLength());
-        et.setFilters((new InputFilter[]{ maxLengthFilter }));*/
-// settin it to password
-        et.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-        String[] parts = question.split(",");
-
-        for (String part : parts) {
-            if (part.equals("+")) {
-
-            } else if (part.equals("-")) {
-
-            } else if (part.equals("*")) {
-
-            } else if (part.equals("/")) {
-
-            }
-        }
-
-//            }  else  if (part.equals("+")) {
-//
-//            }  else  if (part.equals("+")) {
-//
-//            }  else  if (part.equals("+")) {
-//
-//            }  else  if (part.equals("+")) {
-//
-//            }
-    }
-
-    public void CalculateAns() {
-
-    }
 }
