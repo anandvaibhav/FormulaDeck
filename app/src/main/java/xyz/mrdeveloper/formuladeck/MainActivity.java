@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
-import net.objecthunter.exp4j.function.Function;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         textViewAnswer = new TextView(this);
         textViewAnswer.setTextColor(Color.BLACK);
-        textViewAnswer.setTextSize(20);
+        textViewAnswer.setTextSize(12);
         textViewAnswer.setText(R.string.no_value_given);
         layoutParams.setMargins(10, 200, 0, 0);
 
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView mathematicalEntity = new TextView(this);
         mathematicalEntity.setTextColor(Color.BLACK);
-        mathematicalEntity.setTextSize(18);
+        mathematicalEntity.setTextSize(12);
         mathematicalEntity.setText(toSet);
 
         layoutParams.setMargins(0, 0, 0, 0);
@@ -116,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT));
         editTextVariableValues.get(totalEditTexts).setHint(hint);
+        editTextVariableValues.get(totalEditTexts).setTextSize(10);
         editTextVariableValues.get(totalEditTexts).setHintTextColor(Color.GRAY);
         editTextVariableValues.get(totalEditTexts).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
 
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     String editText = editTextVariableValues.get(i).getText().toString().trim();
                     if (editText.isEmpty() || editText.length() == 0 || editText.equals("")) {
                         //EditText is empty
-                        SetAnswerTextView("Fill all the values you Dumb Ass Mother Fucker!");
+                        SetAnswerTextView("Fill all the values you Dumb Ass MotherFucker!");
                         break;
                     } else {
                         Log.d("Check", "editText: " + editText);
@@ -174,12 +174,19 @@ public class MainActivity extends AppCompatActivity {
                 .build()
                 .setVariables(variablesValue);
 
-        double result = e.evaluate();
-        Double truncatedResult = BigDecimal.valueOf(result)
-                .setScale(3, RoundingMode.HALF_UP)
-                .doubleValue();
-        Log.d("Check", "Answer: " + result);
-        return Double.toString(truncatedResult);
+        try {
+            double result = e.evaluate();
+            Double truncatedResult = BigDecimal.valueOf(result)
+                    .setScale(3, RoundingMode.HALF_UP)
+                    .doubleValue();
+
+            Log.d("Check", "Answer: " + result);
+
+            return Double.toString(truncatedResult);
+
+        } catch (NumberFormatException | ArithmeticException exception) {
+        }
+        return "Enter valid values";
     }
 
     public void SetAnswerTextView(String answer) {
