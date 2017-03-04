@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         formulaDataList.add(tempFormulaData);
         tempFormulaData = new Formula("FORMULA %", "(log10[x]) + (log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +");
         /**
-         *  NOT WORKING FOR THIS FORMULA.
+         *  NOT WORKING FOR THIS FORMULA. ALWAYS SWEARING!!! "Fill all the values you Dumb Ass Mother Fucker!"
          */
         formulaDataList.add(tempFormulaData);
 
