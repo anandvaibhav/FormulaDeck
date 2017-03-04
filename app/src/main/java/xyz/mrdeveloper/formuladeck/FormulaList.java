@@ -17,9 +17,9 @@ public class FormulaList extends Fragment {
 
     View view;
     ListView flyingSpaghettiMonster;
-    ArrayList<FormulaData> formulaDataList;
+    ArrayList<Formula> formulaDataList;
 
-    public static FormulaList newInstance(ArrayList<FormulaData> formulas) {
+    public static FormulaList newInstance(ArrayList<Formula> formulas) {
         FormulaList formulaList = new FormulaList();
         formulaList.formulaDataList = formulas;
         return formulaList;
@@ -32,7 +32,7 @@ public class FormulaList extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.formula_list, container, false);
+        view = inflater.inflate(R.layout.list_formula, container, false);
 
         flyingSpaghettiMonster = (ListView) view.findViewById(R.id.list_formula);
 
