@@ -28,20 +28,18 @@ import java.util.Map;
  * Created by Vaibhav on 02-03-2017.
  */
 
-public class FormulaAdapter extends BaseAdapter{
+public class FormulaAdapter extends BaseAdapter {
 
-    ArrayList<FormulaData> formulaDataList;
-
-    ViewHolderForFormula holder;
-
-    String question = "(2 * log10[x]) / ( cos[y])";
-    StringBuilder questionForParser;
-    Integer totalEditTexts = 0;
-    Map<String, Double> variablesValue;
-    List<String> variables, mathematicalEntities;
-    List<EditText> editTextVariableValues;
-
-    Context mContext;
+    private ArrayList<FormulaData> formulaDataList;
+    private ViewHolderForFormula holder;
+    private String question = "(2 * log10[x]) / ( cos[y])";
+    private StringBuilder questionForParser;
+    private Integer totalEditTexts = 0;
+    private Map<String, Double> variablesValue;
+    private List<String> variables;
+    private List<String> mathematicalEntities;
+    private List<EditText> editTextVariableValues;
+    private Context mContext;
 
     public FormulaAdapter(Context context, ArrayList<FormulaData> formulas) {
         mContext = context;
@@ -129,7 +127,7 @@ public class FormulaAdapter extends BaseAdapter{
         LinearLayout layoutFormulaEquation;
     }
 
-    public void SplitAndShowFormula() {
+    private void SplitAndShowFormula() {
         int beginIndex = 0, endIndex = -1, i;
 
         for (i = 0; i < question.length(); ++i) {
@@ -155,7 +153,7 @@ public class FormulaAdapter extends BaseAdapter{
         SetQuestionTextView(question.substring(endIndex + 1, i)); //It will show question.
     }
 
-    public void SetQuestionTextView(String toSet) {
+    private void SetQuestionTextView(String toSet) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -170,7 +168,7 @@ public class FormulaAdapter extends BaseAdapter{
         holder.layoutFormulaEquation.addView(mathematicalEntity);
     }
 
-    public void SetEditText(String hint) {
+    private void SetEditText(String hint) {
         EditText variable = new EditText(mContext);
 
         editTextVariableValues.add(variable);
@@ -227,8 +225,8 @@ public class FormulaAdapter extends BaseAdapter{
             }
         }
     }
-    
-    public String CalculateAnswer() {
+
+    private String CalculateAnswer() {
         Expression e = new ExpressionBuilder(questionForParser.toString())
                 .variables(variables.toArray(new String[0]))
                 .build()
@@ -242,7 +240,7 @@ public class FormulaAdapter extends BaseAdapter{
         return Double.toString(truncatedResult);
     }
 
-    public void SetAnswerTextView(String answer) {
+    private void SetAnswerTextView(String answer) {
         Log.d("Check", "Here I am, this is me!");
         holder.textFormulaAnswer.setText(answer);
 

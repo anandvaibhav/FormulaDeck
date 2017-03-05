@@ -1,25 +1,13 @@
 package xyz.mrdeveloper.formuladeck;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
-import net.objecthunter.exp4j.function.Function;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,16 +20,25 @@ public class MainActivity extends AppCompatActivity {
     Map<String, Double> variablesValue;
     List<String> variables, mathematicalEntities;
     List<EditText> editTextVariableValues;
-
     ArrayList<FormulaData> formulaDataList;
+    public static int activeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mLinearLayout = (LinearLayout) findViewById(R.id.activity_main);
+        activeID = R.id.content_frame;
 
-        formulaDataList = new ArrayList<>();
+        UpdateFromFirebase updateFromFirebase = new UpdateFromFirebase(this, this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SetFragment();
+            }
+        }, 1);
+
+       /* formulaDataList = new ArrayList<>();
 
         FormulaData formulaData = new FormulaData("FORMULA !", "(2 * log10[x]) / ( cos[y])");
         formulaDataList.add(formulaData);
@@ -50,14 +47,7 @@ public class MainActivity extends AppCompatActivity {
         formulaData = new FormulaData("FORMULA #", "(2 * log10[x]) / ( cos[y])");
         formulaDataList.add(formulaData);
         formulaData = new FormulaData("FORMULA $", "(2 * log10[x]) / ( cos[y])");
-        formulaDataList.add(formulaData);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, FormulaList.newInstance(formulaDataList), "FormulaList")
-                .addToBackStack("FormulaList")
-                .commitAllowingStateLoss();
-
+        formulaDataList.add(formulaData);*/
 
 //        variables = new ArrayList<>();
 //        mathematicalEntities = new ArrayList<>();
@@ -80,68 +70,11 @@ public class MainActivity extends AppCompatActivity {
 //        mLinearLayout.addView(textViewAnswer);
 
 
-
         //SetAnswerTextView("Fill values you Dumb Ass!");
         //CalculateAnswer();
     }
 
-    public void SplitAndShowFormula() {
-        int beginIndex = 0, endIndex = -1, i;
-
-        for (i = 0; i < question.length(); ++i) {
-            if (question.charAt(i) == '[') {
-                beginIndex = i;
-                questionForParser.setCharAt(i, '(');
-
-                String text = question.substring(endIndex + 1, i);
-                if (i > 0) {
-                    SetQuestionTextView(text);
-                }
-            } else if (question.charAt(i) == ']') {
-                endIndex = i;
-                questionForParser.setCharAt(i, ')');
-                String variable = question.substring(beginIndex + 1, endIndex);
-
-                variables.add(variable);
-
-                SetEditText(variable);
-                totalEditTexts++;
-            }
-        }
-        SetQuestionTextView(question.substring(endIndex + 1, i)); //It will show question.
-    }
-
-    public void SetQuestionTextView(String toSet) {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        TextView mathematicalEntity = new TextView(this);
-        mathematicalEntity.setTextColor(Color.BLACK);
-        mathematicalEntity.setTextSize(18);
-        mathematicalEntity.setText(toSet);
-
-        layoutParams.setMargins(0, 0, 0, 0);
-        mathematicalEntity.setLayoutParams(layoutParams);
-
-        mLinearLayout.addView(mathematicalEntity);
-    }
-
-    public void SetEditText(String hint) {
-        EditText variable = new EditText(this);
-
-        editTextVariableValues.add(variable);
-        editTextVariableValues.get(totalEditTexts).setLayoutParams(
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
-        editTextVariableValues.get(totalEditTexts).setHint(hint);
-        editTextVariableValues.get(totalEditTexts).setHintTextColor(Color.GRAY);
-        editTextVariableValues.get(totalEditTexts).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-
-        mLinearLayout.addView(variable);
-
-        editTextVariableValues.get(totalEditTexts).addTextChangedListener(new CustomTextWatcher(editTextVariableValues.get(totalEditTexts)));
-    }
-
+    /*
     private class CustomTextWatcher implements TextWatcher {
         private EditText mEditText;
 
@@ -204,5 +137,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Check", "Here I am, this is me!");
         textViewAnswer.setText(answer);
 
+    }*/
+
+    public void SetFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, FormulaList.newInstance(), "FormulaList")
+                .commitAllowingStateLoss();
     }
 }

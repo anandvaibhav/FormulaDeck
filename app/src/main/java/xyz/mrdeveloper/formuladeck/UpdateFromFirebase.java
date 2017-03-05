@@ -17,8 +17,9 @@ import java.util.ArrayList;
 
 public class UpdateFromFirebase extends android.app.Application {
 
-    public static ArrayList<FormulaDetails> allFormulaList;
+    public static ArrayList<FormulaData> allFormulaList;
     public Context mContext;
+    public MainActivity mainActivity;
 
     @Override
     public void onCreate() {
@@ -29,12 +30,9 @@ public class UpdateFromFirebase extends android.app.Application {
     public UpdateFromFirebase() {
     }
 
-    public UpdateFromFirebase(Context context) {
+    public UpdateFromFirebase(MainActivity mainActivity, Context context) {
         mContext = context;
-    }
-
-    public void Update() {
-        Log.d("Check", "Here I am, this is me 1");
+        this.mainActivity = mainActivity;
         UpdateAllFormulas("allformuladetails");
     }
 
@@ -42,15 +40,20 @@ public class UpdateFromFirebase extends android.app.Application {
         final DatabaseReference mFirebaseDatabase;
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
+        Log.d("Check", "Formula");
+
         // get reference to 'users' node
         mFirebaseDatabase = mFirebaseInstance.getReference(arrayName);
 
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("Check", "Value: In the last!!!!!");
+                Log.d("Check", "Check 1");
                 AddAllFormulas(dataSnapshot);
+                Log.d("Check", "Check 2");
+                //mainActivity.SetFragment();
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -65,15 +68,18 @@ public class UpdateFromFirebase extends android.app.Application {
         Log.d("Check", "fatal Here I am, this is me 4");
 
         for (DataSnapshot alert : dataSnapshot.getChildren()) {
-            FormulaDetails FormulaDetails = new FormulaDetails();
+            FormulaData formulaData = new FormulaData();
 
             if (alert != null) {
-                FormulaDetails.category = alert.child("category").getValue(String.class);
-                FormulaDetails.formula = alert.child("formula").getValue(String.class);
-                FormulaDetails.name = alert.child("name").getValue(String.class);
+                //formulaData.category = alert.child("category").getValue(String.class);
+                formulaData.FormulaEquation = alert.child("formula").getValue(String.class);
+                formulaData.FormulaName = alert.child("name").getValue(String.class);
+                Log.d("Check", "Formula Name: " + formulaData.FormulaName);
 
-                allFormulaList.add(FormulaDetails);
+                allFormulaList.add(formulaData);
+                Log.d("Check", "FormulaList Size: " + allFormulaList.size());
             }
         }
+        Log.d("Check", "Check 3");
     }
 }

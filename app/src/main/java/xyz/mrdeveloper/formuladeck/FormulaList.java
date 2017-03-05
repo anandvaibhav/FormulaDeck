@@ -2,12 +2,15 @@ package xyz.mrdeveloper.formuladeck;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import static xyz.mrdeveloper.formuladeck.UpdateFromFirebase.allFormulaList;
 
 /**
  * Created by Vaibhav on 22-02-2017.
@@ -17,12 +20,12 @@ public class FormulaList extends Fragment {
 
     View view;
     ListView flyingSpaghettiMonster;
-    ArrayList<FormulaData> formulaDataList;
 
-    public static FormulaList newInstance(ArrayList<FormulaData> formulas) {
-        FormulaList formulaList = new FormulaList();
-        formulaList.formulaDataList = formulas;
-        return formulaList;
+    public FormulaList() {
+    }
+
+    public static FormulaList newInstance() {
+        return new FormulaList();
     }
 
     @Override
@@ -36,7 +39,9 @@ public class FormulaList extends Fragment {
 
         flyingSpaghettiMonster = (ListView) view.findViewById(R.id.list_formula);
 
-        final FormulaAdapter adapter = new FormulaAdapter(getContext(), formulaDataList);
+        Log.d("Check", "Formula List");
+
+        final FormulaAdapter adapter = new FormulaAdapter(getContext(), allFormulaList);
 
         flyingSpaghettiMonster.setAdapter(new SlideExpandableListAdapter(
                 adapter,
