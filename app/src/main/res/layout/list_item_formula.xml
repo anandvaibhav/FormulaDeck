@@ -2,27 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="0dp"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/text_formula_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:text="CHAPTER NAME"
-            android:textAlignment="center" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!--<View-->
+            <!--android:layout_below="@id/text_formula_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/colorPrimaryDark"/>-->
 
         <!--Button to expand list-->
         <Button
+            android:layout_alignParentBottom="true"
             android:id="@+id/button_expand_toggle"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="35sp" />
 
     </RelativeLayout>
 
@@ -30,23 +38,24 @@
     <RelativeLayout
         android:id="@+id/layout_expand"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <org.apmem.tools.layouts.FlowLayout
             android:id="@+id/layout_formula_equation"
             android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 
         <TextView
-            android:layout_below="@id/layout_formula_equation"
             android:id="@+id/text_formula_answer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_formula_equation"
+            android:layout_margin="5dp"
             android:gravity="center"
-            android:text="Answer"
-            android:textAlignment="center" />
+            android:text="Answer"/>
 
     </RelativeLayout>
 
