@@ -50,10 +50,16 @@ public class MainActivity extends AppCompatActivity {
         formulaDataList.add(tempFormulaData);
         tempFormulaData = new Formula("FORMULA $", "(2 * log10[x]) / ( cos[y]) * (2 * log10[x]) * ( cos[y]) / ( cos[y]) * (2 * log10[x]) / ( cos[y])");
         formulaDataList.add(tempFormulaData);
-        tempFormulaData = new Formula("FORMULA %", "(log10[x]) + (log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +");
-        /**
-         *  NOT WORKING FOR THIS FORMULA. ALWAYS SWEARING!!! "Fill all the values you Dumb Ass Mother Fucker!"
-         */
+        tempFormulaData = new Formula("FORMULA %", "(log10[x]) + (log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x])");
+        formulaDataList.add(tempFormulaData);
+        tempFormulaData = new Formula("FORMULA %", "(log10[x]) + (log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x])");
+        formulaDataList.add(tempFormulaData);
+        tempFormulaData = new Formula("FORMULA %", "(log10[x]) + (log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x])");
+        formulaDataList.add(tempFormulaData);
+        tempFormulaData = new Formula("FORMULA %", "(log10[x]) + (log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x]) +(log10[x])");
+        formulaDataList.add(tempFormulaData);
+        tempFormulaData = new Formula("FORMULA *", "[x] + [y] +(log10[x]) +(log10[x]) +(log10[x])");
+
         formulaDataList.add(tempFormulaData);
 
         getSupportFragmentManager()

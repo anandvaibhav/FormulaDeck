@@ -120,7 +120,7 @@ public class Formula {
 //        variable.setLayoutParams(layoutParams);
 
         variableEditText.setFocusableInTouchMode(true);
-//        variableEditText.setFocusable(true);
+        variableEditText.setFocusable(true);
 
         variableEditText.setTextSize(15);
         variableEditText.setHint(hint);
