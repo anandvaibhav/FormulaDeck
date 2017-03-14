@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack("FormulaList")
                 .commitAllowingStateLoss();
 
-
 //        variables = new ArrayList<>();
 //        mathematicalEntities = new ArrayList<>();
 //        editTextVariableValues = new ArrayList<>();

@@ -7,14 +7,15 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
-
-import org.apmem.tools.layouts.FlowLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -87,8 +88,8 @@ public class Formula {
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 //                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
-                FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
+//        FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
+//                FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
 
 //        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
 //                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -98,8 +99,8 @@ public class Formula {
         mathematicalEntity.setTextSize(15);
         mathematicalEntity.setText(toSet);
 
-        layoutParams.setMargins(0, 0, 0, 0);
-        mathematicalEntity.setLayoutParams(layoutParams);
+//        layoutParams.setMargins(0, 0, 0, 0);
+//        mathematicalEntity.setLayoutParams(layoutParams);
 
         viewGroup.addView(mathematicalEntity);
     }
@@ -108,24 +109,30 @@ public class Formula {
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 //                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
-                FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
+//        FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
+//                FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT);
 
 //        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
 //                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        EditText variable = new EditText(context);
+        EditText variableEditText = new EditText(context);
 //        layoutParams.setMargins(20, 0, 0, 0);
-        variable.setLayoutParams(layoutParams);
-        variable.setTextSize(15);
-        variable.setHint(hint);
-        variable.setHintTextColor(Color.GRAY);
-        variable.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+//        variable.setLayoutParams(layoutParams);
 
-        variable.addTextChangedListener(new CustomTextWatcher(variable, textAnswer));
+        variableEditText.setFocusableInTouchMode(true);
+//        variableEditText.setFocusable(true);
 
-        viewGroup.addView(variable);
-        editTextVariableValues.add(variable);
+        variableEditText.setTextSize(15);
+        variableEditText.setHint(hint);
+        variableEditText.setHintTextColor(Color.GRAY);
+        variableEditText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        variableEditText.setInputType(InputType.TYPE_CLASS_NUMBER |
+                InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+
+        variableEditText.addTextChangedListener(new CustomTextWatcher(variableEditText, textAnswer));
+
+        viewGroup.addView(variableEditText);
+        editTextVariableValues.add(variableEditText);
     }
 
     private class CustomTextWatcher implements TextWatcher {
