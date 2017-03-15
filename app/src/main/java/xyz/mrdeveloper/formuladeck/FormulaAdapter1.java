@@ -81,10 +81,10 @@
 //            holder.textFormulaAnswer = (TextView) convertView.findViewById(R.id.text_formula_answer);
 //            holder.layoutFormulaEquation = (ViewGroup) convertView.findViewById(R.id.layout_formula_equation);
 //
-//            Formula tempFormulaData = (Formula) getItem(position);
+//            Formula tempFormula = (Formula) getItem(position);
 //            FormulaDetails formulaDetails = new FormulaDetails();
 //
-//            formulaDetails.question = tempFormulaData.formulaEquation;
+//            formulaDetails.question = tempFormula.formulaEquation;
 //            formulaDetails.questionForParser = new StringBuilder(formulaDetails.question);
 //            formulaDetails.variables = new ArrayList<>();
 //            formulaDetails.mathematicalEntities = new ArrayList<>();
@@ -93,10 +93,10 @@
 //
 //            formulaDetailsList.add(formulaDetails);
 //
-////            question = tempFormulaData.formulaEquation;
+////            question = tempFormula.formulaEquation;
 //
 //            // Update row view's textviews to display recipe information
-//            holder.textFormulaName.setText(tempFormulaData.formulaName);
+//            holder.textFormulaName.setText(tempFormula.formulaName);
 //
 ////            totalEditTexts = 0;
 ////            variables = new ArrayList<>();

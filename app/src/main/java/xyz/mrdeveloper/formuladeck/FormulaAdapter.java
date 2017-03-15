@@ -1,6 +1,7 @@
 package xyz.mrdeveloper.formuladeck;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +17,13 @@ import java.util.ArrayList;
 public class FormulaAdapter extends BaseAdapter {
 
     ArrayList<Formula> formulaList;
-
     int totalFormulas = 0;
-
     ViewHolderForFormula holder;
-
     Context mContext;
 
     public FormulaAdapter(Context context, ArrayList<Formula> formulas) {
         mContext = context;
-        if (formulas != null)
-            formulaList = formulas;
-        else
-            formulaList = new ArrayList<>();
+        formulaList = formulas;
     }
 
     @Override
@@ -64,9 +59,10 @@ public class FormulaAdapter extends BaseAdapter {
             holder.textFormulaAnswer = (TextView) convertView.findViewById(R.id.text_formula_answer);
             holder.layoutFormulaEquation = (ViewGroup) convertView.findViewById(R.id.layout_formula_equation);
 
-            Formula formulaData = (Formula) getItem(position);
+            Formula Formula = (Formula) getItem(position);
 
-            holder.textFormulaName.setText(formulaData.formulaName);
+            holder.textFormulaName.setText(Formula.formulaName);
+            Log.d("Check", "formulaName2: " + Formula.formulaName);
 
             formulaList.get(position)
                     .SplitAndShowFormula(mContext, holder.layoutFormulaEquation, holder.textFormulaAnswer);

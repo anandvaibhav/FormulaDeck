@@ -16,4 +16,16 @@
         android:layout_height="wrap_content">
 
     </FrameLayout>
+
+    <Button
+        android:text="Formula List"
+        android:id="@+id/FL"
+        android:textColor="#3399ff"
+        android:background="#00000000"
+        android:textSize="20sp"
+        android:layout_width="80dp"
+        android:onClick="FormulaList"
+        android:layout_height="80dp"
+        android:layout_marginTop="92dp"
+        android:layout_weight="1" />
 </LinearLayout>
