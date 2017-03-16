@@ -120,7 +120,7 @@ public class Formula {
 
         for (i = 0; i < formulaEquationForParser.length(); ++i) {
             if (formulaEquationForParser.charAt(i) == '{') {
-                beginIndex = i; 
+                beginIndex = i;
                 for (int j = i; j < formulaEquationForParser.length(); ++j) {
                     if (formulaEquationForParser.charAt(j) == '}') {
                         endIndex = j;
